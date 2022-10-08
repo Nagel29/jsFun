@@ -20,26 +20,33 @@ const { dinosaurs, humans, movies } = require('./datasets/dinosaurs');
 
 // DATASET: kitties from ./datasets/kitties
 const kittyPrompts = {
-  orangePetNames() {
+  orangePetNames(pets) {
     // Return an array of just the names of kitties who are orange e.g.
         // ['Tiger', 'Snickers']
+   
+    const orangeKitties = pets.filter((pet) => {
+      return pet.color === 'orange';
+    })
 
-        /* CODE GOES HERE */
+    const orangeKittyNames = orangeKitties.map((cat) => {
+      return cat.name;
+    })
 
+    return orangeKittyNames;
     // Annotation:
     // Write your annotation here as a comment
   },
 
-  sortByAge() {
+  sortByAge(pets) {
     // Sort the kitties by their age
 
-    /* CODE GOES HERE */
-
+    const petsByAge = pets.sort((a, b) => b.age > a.age ? 1 : -1)
+    return petsByAge;
     // Annotation:
     // Write your annotation here as a comment
   },
 
-  growUp() {
+  growUp(pets) {
     // Return an array of kitties who have all grown up by 2 years e.g.
     // [{
     //   name: 'Felicia',
@@ -53,8 +60,12 @@ const kittyPrompts = {
     // },
     // ...etc]
 
-    /* CODE GOES HERE */
+  const grownPets = pets.forEach(pet => pet.age +=2);
+  
+  return pets;
   }
+
+  
 };
 
 // PLEASE READ-----------------------
