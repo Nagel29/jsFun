@@ -486,8 +486,12 @@ const breweryPrompts = {
     // Return the total beer count of all beers for every brewery e.g.
     // 40
 
-    /* CODE GOES HERE */
-
+  const beerCount = breweries.reduce((count, brewery) => {
+    count += brewery.beers.length;
+    return count;
+  }, 0);
+  
+  return beerCount;
     // Annotation:
     // Write your annotation here as a comment
   },
@@ -501,7 +505,12 @@ const breweryPrompts = {
     // ...etc.
     // ]
 
-    /* CODE GOES HERE */
+    let breweryList = [];
+    const breweryBeerCount = breweries.map(brewery => {
+      breweryList.push({ name: brewery.name, beerCount: brewery.beers.length});
+      return breweryList;
+    })
+    return breweryList;
 
     // Annotation:
     // Write your annotation here as a comment
@@ -512,9 +521,11 @@ const breweryPrompts = {
     // brewery has e.g.
     // given 'Ratio Beerworks', return 5
 
-
-    /* CODE GOES HERE */
-
+    const singleBrewery = breweries
+      .find(brewery => brewery.name === breweryName);
+    
+    return singleBrewery.beers.length;
+    
     // Annotation:
     // Write your annotation here as a comment
   },
@@ -523,12 +534,28 @@ const breweryPrompts = {
     // Return the beer which has the highest ABV of all beers
     // e.g.
     // { name: 'Barrel Aged Nature\'s Sweater', type: 'Barley Wine', abv: 10.9, ibu: 40 }
+    const allBreweryBeers = breweries.reduce((allBeers, brewery) => {
+      allBeers = allBeers.concat(brewery.beers);
+      return allBeers
+    }, []);
 
-    /* CODE GOES HERE */
+    const highestAbvBeer = allBreweryBeers.reduce((highestBeer, beer) => {
+      if (beer.abv > highestBeer.abv) {
+        highestBeer = beer;
+      }
+      return highestBeer;
+    });
+    
+    return highestAbvBeer;
+  },
+
+   
+// reduce all the beers arrays into single array by using concat
+// then find on that array
+
 
     // Annotation:
     // Write your annotation here as a comment
-  }
 };
 
 
