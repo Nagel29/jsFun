@@ -133,7 +133,12 @@ const modPrompts = {
     //   { mod: 4, studentsPerInstructor: 8 }
     // ]
 
-    /* CODE GOES HERE */
+    const alteredMods = mods.map(mod => {
+      return { mod: mod.mod, studentsPerInstructor: mod.students / mod.instructors }
+    })
+
+    return alteredMods
+
 
     // Annotation:
     // Write your annotation here as a comment
