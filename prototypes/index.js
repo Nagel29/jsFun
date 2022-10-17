@@ -428,7 +428,7 @@ const weatherPrompts = {
     // return an array of all the average temperatures. Eg:
     // [ 40, 40, 44.5, 43.5, 57, 35, 65.5, 62, 14, 46.5 ]
 
-    /* CODE GOES HERE */
+    return weather.map(city => (city.temperature.high + city.temperature.low) / 2)
 
     // Annotation:
     // Write your annotation here as a comment
@@ -441,7 +441,9 @@ const weatherPrompts = {
     // 'New Orleans, Louisiana is sunny.',
     // 'Raleigh, North Carolina is mostly sunny.' ]
 
-    /* CODE GOES HERE */
+      return weather
+        .filter(city => city.type.includes('sunny'))
+        .map(city => `${city.location} is ${city.type}.`)
 
     // Annotation:
     // Write your annotation here as a comment
@@ -456,7 +458,12 @@ const weatherPrompts = {
     //   temperature: { high: 49, low: 38 }
     // }
 
-    /* CODE GOES HERE */
+    return weather.reduce((acc, city) => {
+      if (city.humidity > acc.humidity) {
+        acc = city;
+      }
+      return acc;
+    })
 
     // Annotation:
     // Write your annotation here as a comment
