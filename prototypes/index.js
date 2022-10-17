@@ -24,15 +24,12 @@ const kittyPrompts = {
     // Return an array of just the names of kitties who are orange e.g.
         // ['Tiger', 'Snickers']
    
-    const orangeKitties = pets.filter((pet) => {
+    return pets.filter((pet) => {
       return pet.color === 'orange';
-    })
-
-    const orangeKittyNames = orangeKitties.map((cat) => {
+    }).map((cat) => {
       return cat.name;
-    })
+    });
 
-    return orangeKittyNames;
     // Annotation:
     // Write your annotation here as a comment
   },
@@ -60,9 +57,11 @@ const kittyPrompts = {
     // },
     // ...etc]
 
-  const grownPets = pets.forEach(pet => pet.age +=2);
+  return pets.map(pet => { 
+    pet.age += 2;
+    return pet;
+  });
   
-  return pets;
   }
 
   
@@ -172,7 +171,11 @@ const cakePrompts = {
     //    ..etc
     // ]
 
-    /* CODE GOES HERE */
+    const cakeFlavorAndStock = cakes.map(cake => {
+      return { flavor: cake.cakeFlavor, inStock: cake.inStock }
+    })
+
+    return cakeFlavorAndStock;
 
     // Annotation:
     // Write your annotation here as a comment
@@ -199,8 +202,9 @@ const cakePrompts = {
     // ..etc
     // ]
 
-    /* CODE GOES HERE */
-
+   const inStockCakes = cakes.filter(cake => cake.inStock > 0);
+   return inStockCakes;
+   
     // Annotation:
     // Write your annotation here as a comment
   },
@@ -209,7 +213,11 @@ const cakePrompts = {
     // Return the total amount of cakes in stock e.g.
     // 59
 
-    /* CODE GOES HERE */
+    const totalCakes = cakes.reduce((acc, cake) => {
+      return acc + cake.inStock;
+    },0);
+    
+    return totalCakes;
 
     // Annotation:
     // Write your annotation here as a comment
@@ -219,8 +227,18 @@ const cakePrompts = {
     // Return an array of all unique toppings (no duplicates) needed to bake
     // every cake in the dataset e.g.
     // ['dutch process cocoa', 'toasted sugar', 'smoked sea salt', 'berries', ..etc]
+   
 
-    /* CODE GOES HERE */
+  let allToppings = [];
+  cakes.forEach(cake => {
+    cake.toppings.forEach(topping => {
+      if (!allToppings.includes(topping)) {
+        allToppings.push(topping);
+      };
+    });
+  });
+   
+  return allToppings;
 
     // Annotation:
     // Write your annotation here as a comment
@@ -237,8 +255,40 @@ const cakePrompts = {
     //    ...etc
     // }
 
-    /* CODE GOES HERE */
+  // I need an object that has a key for each topping. The value of each topping should be the 
+  // total count of those toppings throughout the cakes array
+  // I need to iterate through the cakes, but then also iterate through the toppings of each cake
+  // 1. Create the object by using the allToppings above? Iterate through that array to establish the keys
+  // 2. Do forEach within a forEach to then increment each property of the object?
 
+
+  return cakes.reduce((acc, cake) => {
+    cake.toppings.forEach(topping => {
+      if (!acc[topping]) {
+        acc[topping] = 0;
+      } 
+      acc[topping]++;
+    })
+    return acc;
+  }, {}); 
+
+  // return groceryList
+  // let allToppings = [];
+  // cakes.forEach(cake => {
+  //     cake.toppings.forEach(topping => {
+  //       if (!allToppings.includes(topping)) {
+  //         allToppings.push(topping);
+  //       };
+  //     });
+  // });
+     
+  // let groceryList = {};
+  // allToppings.forEach(topping => {
+  //   groceryList[topping] = 0;
+  // });
+
+  // console.log(allToppings)
+  // console.log(groceryList)
     // Annotation:
     // Write your annotation here as a comment
   }
@@ -271,7 +321,7 @@ const classPrompts = {
     //   { roomLetter: 'G', program: 'FE', capacity: 29 }
     // ]
 
-    /* CODE GOES HERE */
+    return classrooms.filter(room => room.program === 'FE');
 
     // Annotation:
     // Write your annotation here as a comment
@@ -285,7 +335,13 @@ const classPrompts = {
     //   beCapacity: 96
     // }
 
-    /* CODE GOES HERE */
+    return classrooms.reduce((acc, room) => {
+      if (!acc[room.program.toLowerCase() + 'Capacity']) {
+        acc[room.program.toLowerCase() + 'Capacity'] = 0;
+      }
+      acc[room.program.toLowerCase() + 'Capacity'] += room.capacity;
+      return acc;
+    }, {});
 
     // Annotation:
     // Write your annotation here as a comment
@@ -294,8 +350,7 @@ const classPrompts = {
   sortByCapacity() {
     // Return the array of classrooms sorted by their capacity (least capacity to greatest)
 
-    /* CODE GOES HERE */
-
+    return classrooms.sort((a, b) => a.capacity - b.capacity);
     // Annotation:
     // Write your annotation here as a comment
   }
@@ -542,17 +597,20 @@ const breweryPrompts = {
     const allBreweryBeers = breweries.reduce((allBeers, brewery) => {
       allBeers = allBeers.concat(brewery.beers);
       return allBeers
-    }, []);
-
-    const highestAbvBeer = allBreweryBeers.reduce((highestBeer, beer) => {
-      if (beer.abv > highestBeer.abv) {
-        highestBeer = beer;
-      }
-      return highestBeer;
+    }, []).sort((a, b) => {
+        return b.abv - a.abv;
     });
+
+    return allBreweryBeers[0]
+  //   const highestAbvBeer = allBreweryBeers.reduce((highestBeer, beer) => {
+  //     if (beer.abv > highestBeer.abv) {
+  //       highestBeer = beer;
+  //     }
+  //     return highestBeer;
+  //   });
     
-    return highestAbvBeer;
-  },
+  //   return highestAbvBeer;
+  // },
 
    
 // reduce all the beers arrays into single array by using concat
@@ -561,6 +619,7 @@ const breweryPrompts = {
 
     // Annotation:
     // Write your annotation here as a comment
+  },
 };
 
 
