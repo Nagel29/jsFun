@@ -489,7 +489,14 @@ const nationalParksPrompts = {
     //   parksVisited: ["Rocky Mountain", "Acadia", "Zion"]
     //}
 
-    /* CODE GOES HERE */
+  return nationalParks.reduce((acc, park) => {
+    if (park.visited) {
+      acc.parksVisited.push(park.name);
+    } else {
+      acc.parksToVisit.push(park.name);
+    }
+    return acc;
+  }, { parksToVisit: [], parksVisited: []})
 
     // Annotation:
     // Write your annotation here as a comment
@@ -505,7 +512,10 @@ const nationalParksPrompts = {
     // { Florida: 'Everglades' } ]
 
 
-    /* CODE GOES HERE */
+    return nationalParks.reduce((acc, park) => {
+      acc.push({ [park.location]: park.name })
+      return acc;
+    }, []);
 
     // Annotation:
     // Write your annotation here as a comment
@@ -527,7 +537,17 @@ const nationalParksPrompts = {
     //   'backpacking',
     //   'rock climbing' ]
 
-    /* CODE GOES HERE */
+    let parkActivities = [];
+    nationalParks.forEach(park => {
+      park.activities.forEach(activity => {
+        if (!parkActivities.includes(activity)) {
+          parkActivities.push(activity);
+        }
+      });
+    });
+    
+    
+    return parkActivities;
 
     // Annotation:
     // Write your annotation here as a comment
